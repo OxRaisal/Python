@@ -1,6 +1,5 @@
 from os import path
-import generator
-# функция для добавления данных в результирующий словарь, из которого в последствии сформируется результат (сумма многочленов)
+import DZ2
 def add_to_result(data: str):
     data = data.upper()\
         .replace(' ', '')\
@@ -10,11 +9,9 @@ def add_to_result(data: str):
         .replace('-X', '-1X')\
         .replace(' X', ' 1X')\
         .replace('X ', 'X1 ')
-    # замена верхних степеней на числа
-    for key, value in generator.dict_degrees.items():
+    for key, value in DZ2.dict_degrees.items():
         while value in data:
             data = data.replace(value, str(key))
-    # разбор членов уравнения на составляющие
     for item in data.split():
         if 'X' in item:
             value, key = item.split('X')
@@ -27,7 +24,6 @@ def add_to_result(data: str):
         value, key = int(value), int(key)
         dict_result[key] = dict_result.get(key, 0) + value
 
-# функция для сборки уравнения из словаря
 def create_an_equation_from_dict(members_dict: dict):
     members_list = []
     for key, value in sorted(members_dict.items(), key=lambda x: x[0], reverse=True):
@@ -35,9 +31,8 @@ def create_an_equation_from_dict(members_dict: dict):
             continue
         else:
             coeff = str(value)
-        x = f'X{generator.convert_degree(key)}'
+        x = f'X{DZ2.convert_degree(key)}'
         members_list.append(coeff + x)
-    # сборка строки уравнения
     equation = ' + '.join(members_list) + ' = 0'
     equation = equation.replace('1X', 'X')\
                         .replace(' + -', ' - ')\
