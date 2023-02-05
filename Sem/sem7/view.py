@@ -9,16 +9,19 @@ def main_menu() -> int:
      ]
     for i in range(len(menu_list)):
         print(f'{i+1}. {menu_list[i]}')
-    user_input = input('Введите команду:> ')
+    user_input = int(input('Введите команду:> '))
     # TODO: сделать валидацию
     return user_input
 
 def show_all(db: list):
-    for i in range(len(db)):
+    if len(db) < 1:
+        print('Телефонная книга пуста или не открыта')
+    else:
+        for i in range(len(db)):
         user_id = i + 1
-        print(user_id, end=' ')
-        for k, v in db[i].items():
-            print(k, v, end='; ')
-
+        print(f'\t{user_id}', end=' ')
+        for v in db[i].values():
+            print(f'{v}', end=' ')
+        print()
 
     
